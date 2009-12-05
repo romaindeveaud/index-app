@@ -1,0 +1,19 @@
+/!\ Fichier à lire avant consultation des sources !
+
+Je vous fournis l'intégralité du serveur web qui fait tourner mon application. Dans le cas où vous voudriez la tester vous-même, il faudrait que vous indexiez le corpus avec mon script (méthode décrite ci-dessous), puis que vous vous placiez dans le répertoire principal et tapiez la commande : ruby script/server. L'application serait alors accessible à l'adresse : http://localhost:3000.
+N'oubliez pas de changer les chemin d'accès aux fichiers dans config/environment.rb, dans le script d'indexation et dans la fonction 'show' de search_controller.rb.
+
+Les algorithmes de recherche sont dans le fichier app/controllers/search_controller.rb.
+L'index est chargé au lancement du serveur web, dans le fichier config/environment.rb.
+Le fichier lib/xmllistener.rb est le parser XML qui perm et de convertir les balises XML d'un fichier en HTML pour l'affichage.
+Tout ce qui est relatif à la génération de pages HTML est contenu dans le répertoire app/views.
+
+Le répertoire indexing contient les deux fichiers qui permettent l'indexation du corpus entier.
+Pour lancer l'indexation, il suffit de taper la commande : ruby main.rb (tout en vérifiant que le chemin vers les documents du corpus est correct).
+Le fichier main.rb instancie la classe Listener (définie dans Listener.rb), c'est dans les méthodes de celle-ci que les traitements sont effectués. L'écriture dans les fichiers d'index est effectuée à la toute fin, lorsque tous les fichiers ont été indexés.
+
+Pour toute question je suis joignable par mail : romain.deveaud@gmail.com.
+
+Cordialement,
+
+Romain

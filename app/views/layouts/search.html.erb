@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>Testing Search Engine version 0.11a : <%= controller.action_name %></title>
+    <%= stylesheet_link_tag 'scaffold2' %>
+    <%= javascript_include_tag :defaults %>
+</head>
+<body>
+
+<p style="color: green"><%= flash[:notice] %></p>
+
+<div id="page">
+<div id="home_link"><a href="/">Home</a></div>
+<h1>Testing Search Engine version 0.11a</h1>
+<br />
+<br />
+<div id="speech">
+The documents available for retrieval are a part of the french corpus of the INEX campaign. These documents are semantically annoted with XML tags.<br />
+You can try some requests with keywords, it will be - most of the time, I hope - satisfying.<br />
+The computing time may be long, mostly because of the big corpus and the huge amount of results carried by your request, but also because I'm running this application on a development server, which logs every part of script.<br /><br />
+<strong>04/12/2008 (v0.11a)</strong> : The linking formula has been modified : now files that are pointed by a lot of other files don't climb the file ranking as much as they did.<br /><br />
+<strong>01/12/2008 (v0.10a)</strong> : The whole corpus is now indexed, it contains 110,830 files for 750 Mbytes. The index is composed of three files, one for the words, an other for the documents containing the words, and the last one stores for each document his name (the name of the Wikipedia page), the number of terms indexed in the document and the identifiers of the documents which have an hypertext reference to him.<br /><br />
+<strong>November 2008 (v0.0x)</strong> : Actually, only 10.000 documents are indexed, but the information retrieval is already working and ready for testability.
+</div>
+<br />
+<br />
+    <% form_remote_tag :url => { :action => :searching, :offset => 0 },
+        :before => "Element.show('spinner')",
+        :complete => "Element.hide('spinner')" do %>
+<div id="adv_search" style="display:none">
+Search in the title <%= check_box_tag "title" %><br />
+Disable file linking <%= check_box_tag "linking" %>
+</div>
+<div id="search">
+    <%= text_field_tag :request, '', :size => 65 %>
+    <%= submit_tag "Ok" %> <%= image_tag '/images/arrows.gif', :id => "spinner", :style => 'display:none' %>
+</div>
+<% end %>
+<%= link_to "Advanced search", "#", :onclick => visual_effect(:toggle_blind, :adv_search) %>
+<br />
+
+<div id="search_results">
+</div>
+
+<div id="article_show">
+<%= yield %>
+</div>
+</div>
+<%= image_tag '/images/circle.gif', :id => "loader", :style => 'display:none' %>
+</body>
+</html>

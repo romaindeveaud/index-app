@@ -1,0 +1,2 @@
+page.replace_html("search_results", :partial => "search", :object => @request)
+page[:search_results].visual_effect :blind_down, :duration => 0.5 

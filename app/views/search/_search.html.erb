@@ -1,0 +1,38 @@
+Request inspection... <%= @request.inspect %>
+<br />
+<br />
+<% if @exact_match.length != 0 %>
+Exact match : <br />
+<blockquote>
+    <% @exact_match.each do |doc| %>
+        <%= link_to @name[doc] , :action => "show", :id => doc %>
+        <% unless @request.include?(@name[doc].downcase) %>
+        <span style="color:red">*</span>
+        <% end %>
+        <br />
+    <% end %>
+</blockquote>    
+<% end %>
+<br />
+<%= @doclist.length %> records found.<br />
+<table>
+<% unless @doclist.length == 0 %>
+    <% @offset.to_i.upto(@offset.to_i+20) do |i| %>
+    <tr><td><%= link_to @name[@doclist[i][0]] , :action => "show", :id => @doclist[i][0] %></td> <td>(<%= @doclist[i][0] %>.xml)</td> <td>=> <%= @doclist[i][1] %></td><td> (<%= @point[@doclist[i][0]] %>)</td></tr>
+    <% break if i == (@offset.to_i+19) || i == (@doclist.length-1) %>
+    <% end %>
+<% end %>
+</table>
+<br />
+<% if @offset.to_i > 0 %>
+<%= link_to_remote '<< First ', :url => { :action => :searching, :offset => 0, :title => @title, :linking => @linking } %>
+<%= link_to_remote '<< Previous ', :url => { :action => :searching, :offset => (@offset.to_i-20) , :title => @title, :linking => @linking} %>
+<% end %>
+[Page <%= (@offset.to_i/20)+1 %>]
+<% if @offset.to_i+20 < @doclist.length %>
+<%= link_to_remote ' Next >>', :url => { :action => :searching, :offset => (@offset.to_i+20), :title => @title, :linking => @linking } %>
+<%= link_to_remote ' Last >>', :url => { :action => :searching, :offset => ((@doclist.length/20)*20), :title => @title, :linking => @linking } %>
+<% end %>
+<br />
+<br />
+Request generated in <%= @ending %> seconds.<br />
